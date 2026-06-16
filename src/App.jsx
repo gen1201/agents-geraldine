@@ -15,9 +15,23 @@ const AGENTS = [
 ];
 
 const SOINS = [
-  { id:"zenith", name:"ZÉNITH", duree:90, prix:"80€", couleur:"#C9A96E", desc:"Tensions cervicales" },
-  { id:"cocon",  name:"COCON",  duree:90, prix:"90€", couleur:"#9B7DC8", desc:"Hamac & méditation" },
-  { id:"balize", name:"BALIZÉ", duree:75, prix:"85€", couleur:"#C96E9B", desc:"Pierres volcaniques" },
+  // SOINS ÉNERGÉTIQUES
+  { id:"energie_lumiere",  name:"Énergie de lumière", duree:60,  prix:"70€",   couleur:"#C9A96E", desc:"Libération émotionnelle, harmonisation des chakras et reconnexion à ton axe lumineux", categorie:"Soins Énergétiques" },
+  { id:"renaissance",      name:"Renaissance",         duree:60,  prix:"88€",   couleur:"#C9A96E", desc:"Un reset intérieur pour tourner la page des anciens schémas et renaître à soi", categorie:"Soins Énergétiques" },
+  { id:"vibre_chakras",    name:"Vibre tes chakras",   duree:60,  prix:"77€",   couleur:"#C9A96E", desc:"Activation et alignement des chakras au son des bols tibétains et diapasons", categorie:"Soins Énergétiques" },
+  { id:"sensei_soul",      name:"Sensei Soúl",         duree:45,  prix:"88€",   couleur:"#C9A96E", desc:"Faire le deuil et se délester des mémoires passées, avec ambre et aimants gravés", categorie:"Soins Énergétiques" },
+  { id:"lahochi",          name:"Lahochi",              duree:30,  prix:"50€",   couleur:"#C9A96E", desc:"Canalisation d'énergie par apposition des mains. Détente profonde, apaisement du stress", categorie:"Soins Énergétiques" },
+  // MASSAGES MAGNÉTIQUES
+  { id:"bye_bye_c",        name:"Bye Bye C",            duree:45,  prix:"70€",   couleur:"#9B7DC8", desc:"Massage magnétique libérateur de cellulite. La silhouette se redessine, les jambes s'allègent", categorie:"Massages Magnétiques" },
+  { id:"koharu",           name:"Koharu",               duree:45,  prix:"70€",   couleur:"#9B7DC8", desc:"Rituel magnétique du visage. Les traits se détendent, l'éclat naturel se révèle", categorie:"Massages Magnétiques" },
+  { id:"lymphflow",        name:"Lymphflow",            duree:60,  prix:"120€",  couleur:"#9B7DC8", desc:"Drainage énergétique intuitif. Jambes plus légères, ventre dégonflé, immunité renforcée", categorie:"Massages Magnétiques" },
+  { id:"the_body",         name:"The Body",             duree:120, prix:"140€",  couleur:"#9B7DC8", desc:"Massage immersif : gestes manuels, baguettes Kansa, huiles et énergie vibratoire", categorie:"Massages Magnétiques" },
+  // RITUELS
+  { id:"voyage_sens",      name:"Voyage des sens",      duree:60,  prix:"77€",   couleur:"#6EAFC9", desc:"Bain de pieds parfumé, méditation, pierres de lumière, réflexologie et massage enveloppant, scellé par un enveloppement chaud", categorie:"Rituels" },
+  { id:"hanashi",          name:"Le Rituel Hanashi",    duree:120, prix:"150€",  couleur:"#6EAFC9", desc:"Cérémonie immersive en 5 zones continues, avec Head spa : Kobido crânien et facial, mains, réflexologie plantaire et instruments sacrés", categorie:"Rituels" },
+  // PROGRAMMES
+  { id:"divine_body_flow", name:"Divine Body Flow",     duree:0,   prix:"1111€", couleur:"#C96E9B", desc:"Programme holistique incluant KeyLight : soins drainants, massage anti-cellulite, hypno-méditation et activation du féminin sacré. Programme 5 semaines", categorie:"Programmes" },
+  { id:"keylight",         name:"KeyLight",             duree:60,  prix:"222€",  couleur:"#C96E9B", desc:"Activation vibratoire de la satiété intérieure : un code de lumière posé dans les corps subtils. Rendez-vous visio", categorie:"Programmes" },
 ];
 
 const HORAIRES_DISPO = ["09:00","10:30","12:00","14:00","15:30","17:00","18:30"];
@@ -582,7 +596,7 @@ function BufferTab({ pendingContent, setPendingContent, validated, setValidated,
   const [bufferToken, setBufferToken] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [generating, setGenerating] = useState(false);
-  const [genSoin, setGenSoin] = useState("zenith");
+  const [genSoin, setGenSoin] = useState("hanashi");
   const [genPlatform, setGenPlatform] = useState("Instagram");
   const [genType, setGenType] = useState("Post");
   const [expanded, setExpanded] = useState(null);
@@ -687,7 +701,18 @@ Réponds UNIQUEMENT avec le texte du post, rien d'autre.`,
             <div style={{fontSize:11,color:"#666",marginBottom:6}}>SOIN</div>
             <select value={genSoin} onChange={e=>setGenSoin(e.target.value)} style={{width:"100%",padding:"9px 12px",borderRadius:10,
               background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",color:"#E8E0D4",fontSize:13,outline:"none"}}>
-              {SOINS.map(s=><option key={s.id} value={s.id} style={{background:"#1a1a1e"}}>{s.name}</option>)}
+              <optgroup label="— Rituels" style={{background:"#1a1a1e"}}>
+                {SOINS.filter(s=>s.categorie==="Rituels").map(s=><option key={s.id} value={s.id} style={{background:"#1a1a1e"}}>{s.name}</option>)}
+              </optgroup>
+              <optgroup label="— Soins Énergétiques" style={{background:"#1a1a1e"}}>
+                {SOINS.filter(s=>s.categorie==="Soins Énergétiques").map(s=><option key={s.id} value={s.id} style={{background:"#1a1a1e"}}>{s.name}</option>)}
+              </optgroup>
+              <optgroup label="— Massages Magnétiques" style={{background:"#1a1a1e"}}>
+                {SOINS.filter(s=>s.categorie==="Massages Magnétiques").map(s=><option key={s.id} value={s.id} style={{background:"#1a1a1e"}}>{s.name}</option>)}
+              </optgroup>
+              <optgroup label="— Programmes" style={{background:"#1a1a1e"}}>
+                {SOINS.filter(s=>s.categorie==="Programmes").map(s=><option key={s.id} value={s.id} style={{background:"#1a1a1e"}}>{s.name}</option>)}
+              </optgroup>
             </select>
           </div>
           <div style={{flex:1,minWidth:120}}>
@@ -781,11 +806,20 @@ function SeleneTab({ onLog }) {
   const [showForm, setShowForm] = useState(false);
 
   const MESSAGES_SUIVI = {
-    "ZÉNITH":  (p) => `🌿 Bonjour ${p} ! Comment se porte votre nuque depuis votre soin ZÉNITH ? J'espère que vous sentez la légèreté 🌸 N'hésitez pas à me faire un retour — et si votre corps réclame une nouvelle séance, je suis là ! — Géraldine Esther ✨`,
-    "COCON":   (p) => `🌿 Bonjour ${p} ! J'espère que vous portez encore en vous cette douceur du soin COCON 🪶 Votre corps vous dit merci. Si vous souhaitez replonger dans cette bulle... je vous attends — Géraldine Esther ✨`,
-    "BALIZÉ":  (p) => `🌿 Bonjour ${p} ! Deux jours après BALIZÉ — est-ce que la chaleur des pierres vous manque déjà ? 🌋 Votre peau et vos muscles vous remercient. On remet ça bientôt ? — Géraldine Esther ✨`,
-    "HANASHI": (p) => `🌿 Bonjour ${p} ! Deux jours après HANASHI 話... votre peau vous a dit merci ? ✨ Ce rituel laisse des traces lumineuses. Si vous souhaitez retrouver cette magie, je garde quelques créneaux privilégiés pour vous — Géraldine Esther 🌸`,
-    "default": (p) => `🌿 Bonjour ${p} ! J'espère que vous allez bien depuis votre soin. Votre corps vous remercie de l'avoir choyé 🌸 N'hésitez pas à me partager votre ressenti — Géraldine Esther ✨`,
+    "Le Rituel Hanashi": (p) => `🌿 Bonjour ${p} ! Deux jours après Le Rituel Hanashi 話... votre peau vous a dit merci ? ✨ Cette cérémonie laisse des traces lumineuses. Si vous souhaitez retrouver cette magie, je garde quelques créneaux privilégiés pour vous — Géraldine Esther 🌸`,
+    "Voyage des sens":   (p) => `🌿 Bonjour ${p} ! J'espère que vous portez encore en vous cette douceur du Voyage des sens 🌊 Votre corps vous dit merci. Si vous souhaitez replonger... je vous attends — Géraldine Esther ✨`,
+    "Énergie de lumière":(p) => `🌿 Bonjour ${p} ! Comment vous sentez-vous depuis votre soin Énergie de lumière ? ✨ J'espère que vous ressentez cet alignement intérieur 🌟 N'hésitez pas à me partager votre ressenti — Géraldine Esther 🌸`,
+    "Renaissance":       (p) => `🌿 Bonjour ${p} ! Deux jours après Renaissance... est-ce que vous sentez ce renouveau en vous ? 🦋 Votre corps a tourné une page. Je suis là si vous souhaitez continuer ce chemin — Géraldine Esther ✨`,
+    "Vibre tes chakras": (p) => `🌿 Bonjour ${p} ! Comment vibrent vos chakras depuis notre séance ? 🎵 J'espère que vous ressentez cet alignement profond. Si vous souhaitez une nouvelle activation... — Géraldine Esther ✨`,
+    "Sensei Soúl":       (p) => `🌿 Bonjour ${p} ! Deux jours après Sensei Soúl — est-ce que vous vous sentez plus léger·e ? 🌿 Délester ces mémoires était courageux. Je suis là pour la suite — Géraldine Esther ✨`,
+    "Lahochi":           (p) => `🌿 Bonjour ${p} ! Comment vous sentez-vous depuis votre Lahochi ? ✋ J'espère que cette énergie circule bien en vous. N'hésitez pas à me dire — Géraldine Esther 🌸`,
+    "Bye Bye C":         (p) => `🌿 Bonjour ${p} ! Comment se portent vos jambes depuis Bye Bye C ? ✨ J'espère que vous ressentez cette légèreté retrouvée 🌿 On continue la cure ? — Géraldine Esther`,
+    "Koharu":            (p) => `🌿 Bonjour ${p} ! Est-ce que votre éclat naturel brille toujours depuis Koharu ? ✨ J'espère que vous voyez cette lumière dans votre visage 🌸 — Géraldine Esther`,
+    "Lymphflow":         (p) => `🌿 Bonjour ${p} ! Comment se sentent vos jambes depuis Lymphflow ? 💧 J'espère que cette légèreté persiste. On programme la prochaine séance ? — Géraldine Esther ✨`,
+    "The Body":          (p) => `🌿 Bonjour ${p} ! Deux jours après The Body — est-ce que votre corps vous remercie encore ? 🌿 Ce massage immersif laisse des traces profondes. Je vous attends pour la suite — Géraldine Esther ✨`,
+    "Divine Body Flow":  (p) => `🌿 Bonjour ${p} ! Comment avancez-vous dans votre programme Divine Body Flow ? ✨ Chaque étape vous rapproche de votre féminin sacré 🌸 Je suis là si vous avez des questions — Géraldine Esther`,
+    "KeyLight":          (p) => `🌿 Bonjour ${p} ! Comment résonne en vous votre activation KeyLight ? ✨ Ce code de lumière continue de travailler... Ressentez-vous les changements ? — Géraldine Esther 🌸`,
+    "default":           (p) => `🌿 Bonjour ${p} ! J'espère que vous allez bien depuis votre soin. Votre corps vous remercie de l'avoir choyé 🌸 N'hésitez pas à me partager votre ressenti — Géraldine Esther ✨`,
   };
 
   const getMessage = (soin, prenom) => (MESSAGES_SUIVI[soin] || MESSAGES_SUIVI["default"])(prenom);
@@ -817,7 +851,7 @@ function SeleneTab({ onLog }) {
   const ajouterClient = () => {
     if (!newClient.prenom || !newClient.tel) return;
     setClients(c=>[...c,{id:Date.now(),...newClient,nom:"",date:"aujourd'hui",statut:"à envoyer",couleur:"#C96E9B"}]);
-    setNewClient({prenom:"",nom:"",soin:"ZÉNITH",tel:""});
+    setNewClient({prenom:"",nom:"",soin:"Le Rituel Hanashi",tel:""});
     setShowForm(false);
   };
 
@@ -892,7 +926,7 @@ function SeleneTab({ onLog }) {
             <select value={newClient.soin} onChange={e=>setNewClient(c=>({...c,soin:e.target.value}))}
               style={{width:"100%",padding:"9px 12px",borderRadius:10,background:"rgba(255,255,255,0.05)",
                 border:"1px solid rgba(255,255,255,0.1)",color:"#E8E0D4",fontSize:12,outline:"none"}}>
-              {["ZÉNITH","COCON","BALIZÉ","HANASHI"].map(s=><option key={s} value={s} style={{background:"#1a1a1e"}}>{s}</option>)}
+              {["Énergie de lumière","Renaissance","Vibre tes chakras","Sensei Soúl","Lahochi","Bye Bye C","Koharu","Lymphflow","The Body","Voyage des sens","Le Rituel Hanashi","Divine Body Flow","KeyLight"].map(s=><option key={s} value={s} style={{background:"#1a1a1e"}}>{s}</option>)}
             </select>
           </div>
           {/* Aperçu du message */}
